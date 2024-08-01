@@ -1,0 +1,57 @@
+import random
+
+# Function to generate the secret number
+def generate_secret_number():
+    # Ask the user for the lower and upper bounds
+    lower_bound = int(input("Enter the lower bound of the range: "))
+    upper_bound = int(input("Enter the upper bound of the range: "))
+
+    # Validate the inputs
+    if lower_bound >= upper_bound:
+        print("The lower bound cannot be greater than or equal to the upper bound.")
+        return None
+
+    # Generate the secret number within the given range
+    return random.randint(lower_bound, upper_bound)
+
+# Function to get the player's guess
+def get_player_guess():
+    return int(input("Guess a number within the given range: "))
+
+# Function to check the guess against the secret number
+def check_guess(guess, secret_number):
+    if guess > secret_number:
+        return "Too high."
+    elif guess < secret_number:
+        return "Too low."
+    else:
+        return "Correct"
+
+# Main game loop
+def play_game():
+    secret_number = generate_secret_number()
+    if secret_number is None:
+        print("Please enter valid lower and upper bounds.")
+        return
+
+    attempts = 0
+    won = False
+
+    while True:
+        attempts += 1
+        guess = get_player_guess()
+
+        result = check_guess(guess, secret_number)
+
+        if result == "Correct":
+            print("Congratulations! You guessed the secret number in {} attempts.".format(attempts))
+            won = True
+            break
+        else:
+            print("{} Try again!".format(result))
+
+    if not won:
+        print("Sorry, you ran out of attempts! The secret number was {}.".format(secret_number))
+
+# Start the game
+play_game()
